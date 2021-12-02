@@ -3,9 +3,11 @@
 #include <unistd.h>
 #include <string.h>
 
-int read_value(char *buffer, int buffer_size)
+#define BUFFER_SIZE 200
+
+int read_value(char *buffer)
 {
-    fgets(buffer, buffer_size, stdin);
+    fgets(buffer, BUFFER_SIZE, stdin);
     memcpy(buffer + strcspn(buffer, "\n"), "", 1);
 
     return atoi(buffer);
@@ -14,15 +16,14 @@ int read_value(char *buffer, int buffer_size)
 int main(int argc, char const *argv[])
 {
     int incrementations = 0;
-    int buffer_size = 200;
-    char *buffer = malloc(buffer_size);
+    char *buffer = malloc(BUFFER_SIZE);
 
-    int current = read_value(buffer, buffer_size);
+    int current = read_value(buffer);
     int next;
 
     while (!feof(stdin))
     {
-        next = read_value(buffer, buffer_size);
+        next = read_value(buffer);
         if (next > current)
         {
             incrementations += 1;

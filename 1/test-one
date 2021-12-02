@@ -1,3 +1,4 @@
 #!/bin/sh
 
-gcc -o increase increase.c && ./increase < test-input.txt
+mkdir -p build
+gcc -o build/increase increase.c && ./build/increase < test-input.txt
