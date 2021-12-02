@@ -20,7 +20,6 @@ int main(int argc, char const *argv[])
     char *buffer = malloc(BUFFER_SIZE);
 
     int a, b, c;
-    int ax, bx, cx;
     int incrementations = 0;
     int tmp;
     a = read_value(buffer);
