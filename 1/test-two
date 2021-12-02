@@ -1,0 +1,4 @@
+#!/bin/sh
+
+mkdir -p build
+gcc -o build/window window.c && ./build/window < test-input.txt
