@@ -22,23 +22,22 @@ int main(int argc, char const *argv[])
     int a, b, c;
     int ax, bx, cx;
     int incrementations = 0;
-
+    int tmp;
     a = read_value(buffer);
     b = read_value(buffer);
     c = read_value(buffer);
 
     while (!feof(stdin))
     {
-        ax = b;
-        bx = c;
-        if ((cx = read_value(buffer)) == -1)
+        if ((tmp = read_value(buffer)) == -1)
             break;
-        if (ax + bx + cx > a + b + c)
+
+        if (b + c + tmp > a + b + c)
             incrementations += 1;
 
-        a = ax;
-        b = bx;
-        c = cx;
+        a = b;
+        b = c;
+        c = tmp;
     }
 
     printf("measurement increased %d times\n", incrementations);
