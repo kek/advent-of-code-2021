@@ -14,3 +14,14 @@ Class {
 	],
 	#category : #AdventOfCode2021
 }
+
+{ #category : #initialization }
+PowerConsumptionChecker >> initialize [
+	super initialize.
+	diagnosticReport := SubmarineDiagnosticReport new.
+]
+
+{ #category : #calculating }
+PowerConsumptionChecker >> powerConsumption [
+	^ diagnosticReport epsilonRate * diagnosticReport gammaRate.
+]

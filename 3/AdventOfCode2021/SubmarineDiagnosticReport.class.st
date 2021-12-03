@@ -15,19 +15,42 @@ Class {
 	#category : #AdventOfCode2021
 }
 
+{ #category : #converting }
+SubmarineDiagnosticReport class >> bitsToDecimal: bits [
+	| result significance |
+	result := 0.
+	bits reverse withIndexCollect: [ :bit :index | 
+		significance := 2 raisedTo: index - 1.
+		result := result + (bit * significance).
+	].
+	^ result
+]
+
 { #category : #calculating }
 SubmarineDiagnosticReport >> bitWidth [
 	^ items first size.
 	
 ]
 
-{ #category : #calculating }
-SubmarineDiagnosticReport >> epsilonRate [
-	^ 0.
+{ #category : #accessing }
+SubmarineDiagnosticReport >> epsilonRate [ 
+	^ self class bitsToDecimal: self epsilonRateBits.
 ]
 
 { #category : #calculating }
-SubmarineDiagnosticReport >> gammaRate [
+SubmarineDiagnosticReport >> epsilonRateBits [
+	| maxIndex |
+	maxIndex := self bitWidth.
+	^ (1 to: maxIndex) collect: [ :index | self leastCommonBitAt: index ]
+]
+
+{ #category : #accessing }
+SubmarineDiagnosticReport >> gammaRate [ 
+	^ self class bitsToDecimal: self gammaRateBits.
+]
+
+{ #category : #calculating }
+SubmarineDiagnosticReport >> gammaRateBits [
 	| maxIndex |
 	maxIndex := self bitWidth.
 	^ (1 to: maxIndex) collect: [ :index | self mostCommonBitAt: index ]
@@ -51,7 +74,23 @@ SubmarineDiagnosticReport >> items [
 	^ items.
 ]
 
-{ #category : #accessing }
+{ #category : #calculating }
+SubmarineDiagnosticReport >> leastCommonBitAt: index [
+	| ones zeros bit |
+	ones := 0.
+	zeros := 0.
+	items do: [ :item |
+		bit := item at: index.
+		bit = 1 ifTrue: [ones := ones + 1].
+		bit = 0 ifTrue: [zeros := zeros + 1].
+	].
+	ones = zeros ifTrue: [ self error: 'Both bits are equally common. Undefined requirements.' ].
+	^ ones < zeros ifTrue: 1 ifFalse: 0.
+	
+
+]
+
+{ #category : #calculating }
 SubmarineDiagnosticReport >> mostCommonBitAt: index [
 	| ones zeros bit |
 	ones := 0.
