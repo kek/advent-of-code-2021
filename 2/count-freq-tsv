@@ -1,0 +1,7 @@
+#!/usr/bin/env fish
+
+set forward (cat input__freq.tsv | grep forward | cut -f 3)
+set down (cat input__freq.tsv | grep down | cut -f 3)
+set up (cat input__freq.tsv | grep up | cut -f 3)
+
+math "$forward * ($down - $up)"

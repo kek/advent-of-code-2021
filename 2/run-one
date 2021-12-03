@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# VisiData
+
+vd -f csv --csv-delimiter ' ' --header 0 input
+
+# When the spreadsheet opens,
+#
+# - Go to second column.
+# - Press +.
+# - Type "sum".
+# - Go to first column.
+# - Press F.
+# - Press Ctrl-S to save to input__freq.tsv.
+#
+# Now run ./count-freq-tsv to get the result.
