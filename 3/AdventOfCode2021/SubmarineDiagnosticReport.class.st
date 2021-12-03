@@ -10,28 +10,59 @@ Class {
 	#name : #SubmarineDiagnosticReport,
 	#superclass : #Object,
 	#instVars : [
-		'stream'
+		'items'
 	],
 	#category : #AdventOfCode2021
 }
 
+{ #category : #calculating }
+SubmarineDiagnosticReport >> bitWidth [
+	^ items first size.
+	
+]
+
+{ #category : #calculating }
+SubmarineDiagnosticReport >> epsilonRate [
+	^ 0.
+]
+
+{ #category : #calculating }
+SubmarineDiagnosticReport >> gammaRate [
+	| maxIndex |
+	maxIndex := self bitWidth.
+	^ (1 to: maxIndex) collect: [ :index | self mostCommonBitAt: index ]
+]
+
 { #category : #initialization }
 SubmarineDiagnosticReport >> initialize [
-	"comment stating purpose of instance-side method"
-	"scope: class-variables  &  instance-variables"	
-			
-	| dir |
+	| dir stream bytes |
 	super initialize.
 	dir := FileSystem disk workingDirectoryPath.
 	stream := (dir / 'pharo-local/iceberg/kek/advent-of-code-2021/3/input') asFileReference readStream.
+	items := OrderedCollection new.
+	[ stream atEnd ] whileFalse: [ 
+		bytes := stream nextLine asByteArray.
+		items add: (bytes collect: [:v | v - 48]) 
+	].
 ]
 
 { #category : #accessing }
-SubmarineDiagnosticReport >> next [
-	"comment stating purpose of instance-side method"
-	"scope: class-variables  &  instance-variables"	
-			
-	| line |
-	line := stream nextLine.
-	^ line.
+SubmarineDiagnosticReport >> items [
+	^ items.
+]
+
+{ #category : #accessing }
+SubmarineDiagnosticReport >> mostCommonBitAt: index [
+	| ones zeros bit |
+	ones := 0.
+	zeros := 0.
+	items do: [ :item |
+		bit := item at: index.
+		bit = 1 ifTrue: [ones := ones + 1].
+		bit = 0 ifTrue: [zeros := zeros + 1].
+	].
+	ones = zeros ifTrue: [ self error: 'Both bits are equally common. Undefined requirements.' ].
+	^ ones > zeros ifTrue: 1 ifFalse: 0.
+	
+
 ]
