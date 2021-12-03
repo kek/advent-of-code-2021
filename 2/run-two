@@ -1,0 +1,10 @@
+#!/bin/sh
+
+echo "Forward\tDown\tUp\tAim\tDepth\tPosition" > movements.tsv
+echo "0\t0\t0\t0\t0\t0" >> movements.tsv
+cat input | sed 's/forward \(.*\)/\1\t0\t0\t0\t0\t0/' \
+          | sed    's/down \(.*\)/0\t\1\t0\t0\t0\t0/' \
+          | sed      's/up \(.*\)/0\t0\t\1\t0\t0\t0/' \
+          >> movements.tsv
+
+# Now do the rest in Excel. See movements.xlsx
