@@ -15,6 +15,32 @@ Class {
 	#category : #AdventOfCode2021
 }
 
+{ #category : #calculating }
+PowerConsumptionChecker >> bitRun: block [
+	^ (1 to: diagnosticReport bitWidth) collect: block
+]
+
+{ #category : #accessing }
+PowerConsumptionChecker >> epsilonRate [ 
+	^ SubmarineTools bitsToDecimal: self epsilonRateBits.
+]
+
+{ #category : #calculating }
+PowerConsumptionChecker >> epsilonRateBits [
+	^ self bitRun: [ :index | diagnosticReport leastCommonBitAt: index ].
+]
+
+{ #category : #accessing }
+PowerConsumptionChecker >> gammaRate [ 
+	^ SubmarineTools bitsToDecimal: self gammaRateBits.
+]
+
+{ #category : #calculating }
+PowerConsumptionChecker >> gammaRateBits [
+
+	^ self bitRun: [ :index | diagnosticReport mostCommonBitAt: index ]
+]
+
 { #category : #initialization }
 PowerConsumptionChecker >> initialize [
 	super initialize.
@@ -23,5 +49,5 @@ PowerConsumptionChecker >> initialize [
 
 { #category : #calculating }
 PowerConsumptionChecker >> powerConsumption [
-	^ diagnosticReport epsilonRate * diagnosticReport gammaRate.
+	^ self epsilonRate * self gammaRate.
 ]

@@ -3,7 +3,7 @@ The submarine has been making some odd creaking noises, so you ask it to produce
 
 The diagnostic report (your puzzle input) consists of a list of binary numbers which, when decoded properly, can tell you many useful things about the conditions of the submarine.
 
-I produce a stream from a file. 
+I produce a list of bit lists from a file. 
 
 "
 Class {
@@ -15,45 +15,10 @@ Class {
 	#category : #AdventOfCode2021
 }
 
-{ #category : #converting }
-SubmarineDiagnosticReport class >> bitsToDecimal: bits [
-	| result significance |
-	result := 0.
-	bits reverse withIndexCollect: [ :bit :index | 
-		significance := 2 raisedTo: index - 1.
-		result := result + (bit * significance).
-	].
-	^ result
-]
-
 { #category : #calculating }
 SubmarineDiagnosticReport >> bitWidth [
 	^ items first size.
 	
-]
-
-{ #category : #accessing }
-SubmarineDiagnosticReport >> epsilonRate [ 
-	^ self class bitsToDecimal: self epsilonRateBits.
-]
-
-{ #category : #calculating }
-SubmarineDiagnosticReport >> epsilonRateBits [
-	| maxIndex |
-	maxIndex := self bitWidth.
-	^ (1 to: maxIndex) collect: [ :index | self leastCommonBitAt: index ]
-]
-
-{ #category : #accessing }
-SubmarineDiagnosticReport >> gammaRate [ 
-	^ self class bitsToDecimal: self gammaRateBits.
-]
-
-{ #category : #calculating }
-SubmarineDiagnosticReport >> gammaRateBits [
-	| maxIndex |
-	maxIndex := self bitWidth.
-	^ (1 to: maxIndex) collect: [ :index | self mostCommonBitAt: index ]
 ]
 
 { #category : #initialization }
