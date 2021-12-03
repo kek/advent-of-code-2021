@@ -25,3 +25,13 @@ SubmarineDiagnosticReport >> initialize [
 	dir := FileSystem disk workingDirectoryPath.
 	stream := (dir / 'pharo-local/iceberg/kek/advent-of-code-2021/3/input') asFileReference readStream.
 ]
+
+{ #category : #accessing }
+SubmarineDiagnosticReport >> next [
+	"comment stating purpose of instance-side method"
+	"scope: class-variables  &  instance-variables"	
+			
+	| line |
+	line := stream nextLine.
+	^ line.
+]
