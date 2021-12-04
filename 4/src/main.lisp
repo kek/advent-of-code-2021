@@ -17,14 +17,13 @@
                 (mapcar (lambda (number) (concatenate 'string number " "))
                         lines))))
 
-
 (defparameter *input-lines*
         (let*
           ((input-file-path (asdf:system-relative-pathname :submarine-bingo "../input"))
            (input (uiop:read-file-string input-file-path)))
           (uiop:split-string input :separator '(#\Newline))))
 
-(defparameter *called-numbers*
+(defparameter *number-calling-sequence*
   (read-from-string
    (concatenate 'string "("
                   (substitute #\Space #\, (car *input-lines*))
@@ -38,3 +37,26 @@
        (board-numbers (read-from-string board-numbers-sexp))
        (boards (chunked board-numbers 25)))
    boards))
+
+(defun row (board n)
+  (nth n board))
+
+(defun column (board n)
+  (mapcar (lambda (row) (nth n row))
+          (rows board)))
+
+(defun columns (board)
+  (mapcar (lambda (i) (column board i))
+          '(0 1 2 3 4)))
+
+(defun rows (board)
+  (chunked board 5))
+
+(defun won? (board called-numbers)
+  (let*
+      ((marked? (lambda (number) (member number called-numbers)))
+       (bingo? (lambda (numbers) (every marked? numbers)))
+       (rows (rows board))
+       (columns (columns board))
+       (rows-and-columns (append rows columns)))
+   (some bingo? rows-and-columns)))
