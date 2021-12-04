@@ -20,6 +20,11 @@ PowerConsumptionChecker >> bitRun: block [
 	^ (1 to: diagnosticReport bitWidth) collect: block
 ]
 
+{ #category : #calculating }
+PowerConsumptionChecker >> calculate [
+	^ self epsilonRate * self gammaRate.
+]
+
 { #category : #accessing }
 PowerConsumptionChecker >> epsilonRate [ 
 	^ SubmarineTools bitsToDecimal: self epsilonRateBits.
@@ -45,9 +50,4 @@ PowerConsumptionChecker >> gammaRateBits [
 PowerConsumptionChecker >> initialize [
 	super initialize.
 	diagnosticReport := SubmarineDiagnosticReport new.
-]
-
-{ #category : #calculating }
-PowerConsumptionChecker >> powerConsumption [
-	^ self epsilonRate * self gammaRate.
 ]
