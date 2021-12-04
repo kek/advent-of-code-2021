@@ -1,5 +1,0 @@
-# Submarine-Bingo
-
-## Usage
-
-## Installation
