@@ -17,14 +17,24 @@
                 (mapcar (lambda (number) (concatenate 'string number " "))
                         lines))))
 
-(let*
-    ((input-file-path (asdf:system-relative-pathname :submarine-bingo "../input"))
-     (input (uiop:read-file-string input-file-path))
-     (lines (uiop:split-string input :separator '(#\Newline)))
-     (called-numbers (car lines))
-     (board-lines (cdr lines))
-     (board-numbers-text (join-lines-with-space board-lines))
-     (board-numbers-sexp (concatenate 'string "(" board-numbers-text ")"))
-     (board-numbers (read-from-string board-numbers-sexp))
-     (boards (chunked board-numbers 25)))
- boards)
+
+(defparameter *input-lines*
+        (let*
+          ((input-file-path (asdf:system-relative-pathname :submarine-bingo "../input"))
+           (input (uiop:read-file-string input-file-path)))
+          (uiop:split-string input :separator '(#\Newline))))
+
+(defparameter *called-numbers*
+  (read-from-string
+   (concatenate 'string "("
+                  (substitute #\Space #\, (car *input-lines*))
+                  ")")))
+
+(defparameter *boards*
+  (let*
+      ((board-lines (cdr *input-lines*))
+       (board-numbers-text (join-lines-with-space board-lines))
+       (board-numbers-sexp (concatenate 'string "(" board-numbers-text ")"))
+       (board-numbers (read-from-string board-numbers-sexp))
+       (boards (chunked board-numbers 25)))
+   boards))
