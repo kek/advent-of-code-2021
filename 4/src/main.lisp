@@ -2,9 +2,8 @@
   (:use :cl))
 (in-package :submarine-bingo)
 
-;; From https://stackoverflow.com/a/59048247
-
 (defun chunked (seq size)
+  ;; Inspired by https://stackoverflow.com/a/59048247
   (let* ((total (length seq))
          (amount (ceiling total size))
          (res '()))
@@ -62,10 +61,8 @@
    (some bingo? rows-and-columns)))
 
 (defun won-boards (called-numbers)
-   (mapcan (lambda (board)
-             (if (won? board called-numbers)
-                 board
-                 '()))
+   (remove-if-not (lambda (board)
+                    (won? board called-numbers))
            *boards*))
 
 (defparameter *called-number-sequences*
@@ -77,8 +74,23 @@
 
 (defun score-for-winning-board ()
   (let* ((called-numbers (first-winning-sequence))
-         (board (won-boards called-numbers))
-         (unmarked-numbers (remove-if (lambda (x) (member x called-numbers)) board))
+         (board (car (won-boards called-numbers))))
+    (score-for-board board called-numbers)))
+
+(defun score-for-board (board called-numbers)
+  (let* ((unmarked-numbers (remove-if (lambda (x) (member x called-numbers)) board))
          (sum-of-unmarked-numbers (reduce '+ unmarked-numbers))
          (last-called-number (car (last called-numbers))))
     (* last-called-number sum-of-unmarked-numbers)))
+
+(defparameter next-last-winning-sequence
+  (find-if (lambda (sq) (= 99 (length (won-boards sq)))) *called-number-sequences*))
+
+(defparameter last-winning-sequence
+  (find-if (lambda (sq) (= 100 (length (won-boards sq)))) *called-number-sequences*))
+
+(defparameter last-winning-board
+  (car (remove-if (lambda (board) (won? board next-last-winning-sequence)) *boards*)))
+
+(defun score-for-last-winning-board ()
+    (score-for-board last-winning-board last-winning-sequence))
