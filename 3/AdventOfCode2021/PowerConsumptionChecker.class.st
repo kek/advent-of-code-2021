@@ -16,6 +16,13 @@ Class {
 }
 
 { #category : #calculating }
+PowerConsumptionChecker class >> lifeSupportRating [
+
+	^ self new oxygenRatingDestructive
+	* self new co2ScrubberRatingDestructive
+]
+
+{ #category : #calculating }
 PowerConsumptionChecker >> bitRun: block [
 	^ (1 to: diagnosticReport bitWidth) collect: block
 ]
@@ -30,9 +37,10 @@ PowerConsumptionChecker >> co2ScrubberRatingDestructive [
 
 	| bits |
 	1 to: diagnosticReport bitWidth do: [ :i | 
-	diagnosticReport removeMostCommonAt: i ].
+		diagnosticReport items size = 1 ifFalse: [ 
+			diagnosticReport keepLeastCommonAt: i ] ].
 	bits := diagnosticReport items first.
-	^ bits
+	^ SubmarineTools bitsToDecimal: bits
 ]
 
 { #category : #accessing }
@@ -67,7 +75,7 @@ PowerConsumptionChecker >> oxygenRatingDestructive [
 
 	| bits |
 	1 to: diagnosticReport bitWidth do: [ :i | 
-	diagnosticReport removeLeastCommonAt: i ].
+	diagnosticReport keepMostCommonAt: i ].
 	bits := diagnosticReport items first.
-	^ bits
+	^ SubmarineTools bitsToDecimal: bits
 ]
