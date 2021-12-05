@@ -21,17 +21,25 @@ SubmarineDiagnosticReport >> bitWidth [
 	
 ]
 
+{ #category : #removing }
+SubmarineDiagnosticReport >> discard: block [
+
+	items := items removeAllSuchThat: block.
+]
+
 { #category : #initialization }
 SubmarineDiagnosticReport >> initialize [
+
 	| dir stream bytes |
 	super initialize.
 	dir := FileSystem disk workingDirectoryPath.
-	stream := (dir / 'pharo-local/iceberg/kek/advent-of-code-2021/3/input') asFileReference readStream.
+	stream := (dir
+	           / 'pharo-local/iceberg/kek/advent-of-code-2021/3/example')
+		          asFileReference readStream.
 	items := OrderedCollection new.
 	[ stream atEnd ] whileFalse: [ 
 		bytes := stream nextLine asByteArray.
-		items add: (bytes collect: [:v | v - 48]) 
-	].
+		items add: (bytes collect: [ :v | v - 48 ]) ]
 ]
 
 { #category : #accessing }
@@ -41,32 +49,50 @@ SubmarineDiagnosticReport >> items [
 
 { #category : #calculating }
 SubmarineDiagnosticReport >> leastCommonBitAt: index [
+
 	| ones zeros bit |
 	ones := 0.
 	zeros := 0.
-	items do: [ :item |
+	items do: [ :item | 
 		bit := item at: index.
-		bit = 1 ifTrue: [ones := ones + 1].
-		bit = 0 ifTrue: [zeros := zeros + 1].
-	].
-	ones = zeros ifTrue: [ self error: 'Both bits are equally common. Undefined requirements.' ].
-	^ ones < zeros ifTrue: 1 ifFalse: 0.
-	
-
+		bit = 1 ifTrue: [ ones := ones + 1 ].
+		bit = 0 ifTrue: [ zeros := zeros + 1 ] ].
+	^ ones = zeros ifTrue: [ 0 ] ifFalse: [ 
+		  ones < zeros
+			  ifTrue: 1
+			  ifFalse: 0 ]
 ]
 
 { #category : #calculating }
 SubmarineDiagnosticReport >> mostCommonBitAt: index [
+
 	| ones zeros bit |
 	ones := 0.
 	zeros := 0.
-	items do: [ :item |
+	items do: [ :item | 
 		bit := item at: index.
-		bit = 1 ifTrue: [ones := ones + 1].
-		bit = 0 ifTrue: [zeros := zeros + 1].
-	].
-	ones = zeros ifTrue: [ self error: 'Both bits are equally common. Undefined requirements.' ].
-	^ ones > zeros ifTrue: 1 ifFalse: 0.
-	
+		bit = 1 ifTrue: [ ones := ones + 1 ].
+		bit = 0 ifTrue: [ zeros := zeros + 1 ] ].
+	ones = zeros ifTrue: [ ^ 1 ].
+	^ ones > zeros
+		  ifTrue: 1
+		  ifFalse: 0
+]
 
+{ #category : #removing }
+SubmarineDiagnosticReport >> removeLeastCommonAt: position [
+
+	self discard: [ :item | 
+		items size = 1
+			ifFalse: [ (self leastCommonBitAt: position) = (item at: position) ]
+			ifTrue: false ]
+]
+
+{ #category : #removing }
+SubmarineDiagnosticReport >> removeMostCommonAt: position [
+
+	self discard: [ :item | 
+		items size = 1 ifFalse: [ 
+			(self mostCommonBitAt: position) = (item at: position) ] 
+		ifTrue: false ]
 ]

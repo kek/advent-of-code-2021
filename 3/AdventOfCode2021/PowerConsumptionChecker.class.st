@@ -25,6 +25,16 @@ PowerConsumptionChecker >> calculate [
 	^ self epsilonRate * self gammaRate.
 ]
 
+{ #category : #calculating }
+PowerConsumptionChecker >> co2ScrubberRatingDestructive [
+
+	| bits |
+	1 to: diagnosticReport bitWidth do: [ :i | 
+	diagnosticReport removeMostCommonAt: i ].
+	bits := diagnosticReport items first.
+	^ bits
+]
+
 { #category : #accessing }
 PowerConsumptionChecker >> epsilonRate [ 
 	^ SubmarineTools bitsToDecimal: self epsilonRateBits.
@@ -50,4 +60,14 @@ PowerConsumptionChecker >> gammaRateBits [
 PowerConsumptionChecker >> initialize [
 	super initialize.
 	diagnosticReport := SubmarineDiagnosticReport new.
+]
+
+{ #category : #calculating }
+PowerConsumptionChecker >> oxygenRatingDestructive [
+
+	| bits |
+	1 to: diagnosticReport bitWidth do: [ :i | 
+	diagnosticReport removeLeastCommonAt: i ].
+	bits := diagnosticReport items first.
+	^ bits
 ]
