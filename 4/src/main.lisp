@@ -18,10 +18,10 @@
                         lines))))
 
 (defparameter *input-lines*
-        (let*
-          ((input-file-path (asdf:system-relative-pathname :submarine-bingo "../input"))
-           (input (uiop:read-file-string input-file-path)))
-          (uiop:split-string input :separator '(#\Newline))))
+  (let*
+    ((input-file-path (asdf:system-relative-pathname :submarine-bingo "input"))
+     (input (uiop:read-file-string input-file-path)))
+    (uiop:split-string input :separator '(#\Newline))))
 
 (defparameter *number-calling-sequence*
   (read-from-string
@@ -60,3 +60,25 @@
        (columns (columns board))
        (rows-and-columns (append rows columns)))
    (some bingo? rows-and-columns)))
+
+(defun won-boards (called-numbers)
+   (mapcan (lambda (board)
+             (if (won? board called-numbers)
+                 board
+                 '()))
+           *boards*))
+
+(defparameter *called-number-sequences*
+  (loop for n from 1 to (length *number-calling-sequence*) by 1
+        collect (subseq *number-calling-sequence* 0 n)))
+
+(defun first-winning-sequence ()
+  (find-if #'won-boards *called-number-sequences*))
+
+(defun score-for-winning-board ()
+  (let* ((called-numbers (first-winning-sequence))
+         (board (won-boards called-numbers))
+         (unmarked-numbers (remove-if (lambda (x) (member x called-numbers)) board))
+         (sum-of-unmarked-numbers (reduce '+ unmarked-numbers))
+         (last-called-number (car (last called-numbers))))
+    (* last-called-number sum-of-unmarked-numbers)))
