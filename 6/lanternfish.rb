@@ -35,11 +35,21 @@ class LanternfishSchool
     end
 end
 
+class LanternfishSchoolCalculator
+    def initialize(input, days)
+        @school = LanternfishSchool.new(input)
+        @days = days
+    end
+
+    def run
+        @days.times do
+            @school.tick
+        end
+        puts "Size after 80 days: #{@school.size}"
+    end
+end
+
 example = "3,4,3,1,2"
 problem_input = File.read("input")
 
-school = LanternfishSchool.new(problem_input)
-80.times do
-    school.tick
-end
-puts school.size
+LanternfishSchoolCalculator.new(example, 80).run
