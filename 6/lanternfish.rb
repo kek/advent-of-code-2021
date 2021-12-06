@@ -1,20 +1,21 @@
 class LanternfishSchool
     def initialize(input)
-        @fish = parse(input)
+        fish = parse(input)
+        @fish = Array.new(9, 0)
+        fish.each do |timer|
+            @fish[timer] += 1
+        end
     end
 
     def tick
-        spawned_fish = []
-        @fish = @fish.map do |timer|
-            case timer
-            when 0
-                spawned_fish.push 8
-                6
-            else
-                timer - 1
-            end
+        fisk = Array.new(9, 0)
+        (0..7).each do |timer|
+            fisk[timer] = @fish[timer + 1]
         end
-        @fish = @fish + spawned_fish
+        fisk[8] = @fish[0]
+        fisk[6] += @fish[0]
+
+        @fish = fisk
         self
     end
 
@@ -23,7 +24,7 @@ class LanternfishSchool
     end
 
     def size
-        @fish.count
+        @fish.sum
     end
 
     private
@@ -45,11 +46,12 @@ class LanternfishSchoolCalculator
         @days.times do
             @school.tick
         end
-        puts "Size after 80 days: #{@school.size}"
+        puts "Size after #{@days} days: #{@school.size}"
     end
 end
 
 example = "3,4,3,1,2"
 problem_input = File.read("input")
 
-LanternfishSchoolCalculator.new(example, 80).run
+LanternfishSchoolCalculator.new(example, 256).run
+LanternfishSchoolCalculator.new(problem_input, 256).run
