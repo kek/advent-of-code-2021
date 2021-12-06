@@ -24,10 +24,7 @@ public class LinePoint {
 
     @Override
     public String toString() {
-        return "LinePoint{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
+        return "(" + x + "," + y + ")";
     }
 
     int x, y;

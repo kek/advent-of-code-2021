@@ -17,9 +17,11 @@ public class Main {
 
         //inputLines.forEach(System.out::println);
 
+        /* Calculate result */
+
         Field field = new Field(inputLines);
         ArrayList<LinePoint> points = field.points();
-        points.forEach(p -> System.out.println(p.toString()));
+        //points.forEach(p -> System.out.println(p.toString()));
 
         Hashtable<LinePoint, Integer> frequencies = new Hashtable<>();
         points.forEach(point ->
@@ -30,7 +32,7 @@ public class Main {
                     frequencies.put(point, freq);
                 }
         );
-        frequencies.forEach((point, freq) -> System.out.println(point + " :: " + freq));
+        //frequencies.forEach((point, freq) -> System.out.println(point + " :: " + freq));
 
         AtomicInteger overlaps = new AtomicInteger();
         frequencies.forEach((point, freq) -> {
@@ -39,6 +41,5 @@ public class Main {
                 }
         );
         System.out.println(overlaps);
-
     }
 }
