@@ -2,7 +2,7 @@
 
 ## Day 1. C
 
-I started with the basics, since when I grew up, it was believed that C was a good first language for children. C was a decent tool to solve day 1 in an imperative manner, changing a counter while iterating through a stream.
+I started with the basics. When I grew up, it was believed that C was a good first language for children. C was a decent tool to solve day 1 in an imperative manner, changing a counter while iterating through a stream.
 
 ## Day 2. VisiData, Fish shell, sed, Microsoft Excel
 
