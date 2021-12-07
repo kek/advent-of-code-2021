@@ -27,3 +27,7 @@ I had some trouble creating a project in IntelliJ, but after that, most of the c
 ## Day 6. Ruby
 
 This day was quickest for me so far. The most obvious solution for part one can't be applied directly on part two, which required me to rewrite the calculation part and data structure. The language provided no obstacle for solving it. I was able to refactor and then switch out the calculation algorithm for a more fitting one easily.
+
+## Day 7. Perl
+
+Perl really is old. The author of Perl didn't bother to add support for named parameters so anything passed to a function gets put in a special `@_` object that must be destructured at the top of every function (in Perl terminology, every subroutine). This adds a little bit of boilerplate but also a certain historic flavor, which is fun. This day I ran into the second scalability problem, in that for my first attempt at part two, the Perl interpreter complained about the recursion running too deep, so I had to unwind my recursive function into a loop, which is fine because Perl is probably not designed for using too much recursion. The program also took a while to run for part two, which got me a bit worried at first, but it finished in about a minute. I assume most of the problems in Advent of Code can be solved in any language with a lot of overhead like Perl, but they might require more clever algorithms in later days, regardless of language.
