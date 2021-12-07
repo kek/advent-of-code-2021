@@ -12,9 +12,21 @@ my @crabs = split /,/, $real_input;
 
 # print Dumper \@crabs;
 
+sub movement_cost {
+    my ($distance) = @_;
+    my $cost = 0;
+    my $delta_cost = 1;
+    foreach (1..$distance) {
+        $cost += $delta_cost;
+        $delta_cost += 1;
+    }
+    return $cost;
+}
+
 sub crab_alignment_cost {
     my ($starting_height, $ending_height) = @_;
-    my $result = abs($starting_height - $ending_height);
+    my $diff = abs($starting_height - $ending_height);
+    my $result = movement_cost($diff);
     return $result;
 }
 
@@ -34,8 +46,10 @@ sub find_lowest_fuel_cost {
     foreach(1 .. max(@crabs)) {
         my $candidate = $_;
         my $candidate_cost = crabs_alignment_cost($candidate);
+        print("Cost for $candidate: $candidate_cost\n");
         if ($candidate_cost < $best_cost) {
             $best_cost = $candidate_cost;
+            print("Found best cost so far\n");
         }
     }
     return $best_cost;
