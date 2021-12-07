@@ -1,16 +1,10 @@
-use Data::Dumper qw(Dumper);
 use strict;
 use warnings;
 use List::Util qw(max);
 
-my $real_input = <>;
-chomp($real_input);
-my @crabs = split /,/, $real_input;
-
-# my $example_input = "16,1,2,0,4,2,7,1,2,14";
-# my @crabs = split /,/, $example_input;
-
-# print Dumper \@crabs;
+my $input = <>;
+chomp($input);
+my @crabs = split /,/, $input;
 
 sub movement_cost {
     my ($distance) = @_;
