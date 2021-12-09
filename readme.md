@@ -10,7 +10,11 @@ Spreadsheets were excellent for solving this problem. First part was just a simp
 
 ## Day 3. Smalltalk
 
-I used Pharo Smalltalk for this. Pharo really has gotten good Git integration since last time I tried to use it. But the GUI is aged and/or excentric. For example, in order to resize a window you have to first focus it, unlike any other window managers in any GUI system. Pharo has had 10 years to make a decent workaround for the lack of high-resolution screen support but there is still no way to configure Pharo so that fonts don't look either blurry or unreadably small. It is reasonably easy to navigate code and refactor in Pharo. The standard library had the functions needed to solve day 3 without too much trouble.
+I used Pharo Smalltalk for this. Pharo really has gotten good Git integration since last time I tried to use it. But the GUI is aged and/or excentric. For example, in order to resize a window you have to first focus it, unlike any other window managers in any GUI system.
+
+Pharo has had 10 years to make support for high-resolution screens, but there is still no way to configure Pharo so that fonts don't look either blurry or unreadably small. Every few years when I try Pharo, I discover that the blurry fonts bother me less. This must mean Pharo is especially suited for old and wise users.
+
+It is reasonably easy to navigate code and refactor in Pharo. The standard library had the functions needed to solve day 3 without too much trouble.
 
 ## Day 4. Common Lisp
 
