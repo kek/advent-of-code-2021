@@ -1,3 +1,36 @@
+import unittest
+from seven_signal_displays import *
+
+
+print("Day 8")
+f = open("example")
+lines = [line.rstrip() for line in f]
+
+
+class EntryTest(unittest.TestCase):
+    def test_create_entry(self):
+        entry = Entry(lines[0])
+        self.assertEqual(Digit, type(entry.at(0)))
+
+
+class PatternTest(unittest.TestCase):
+    entry = Entry(
+        "acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab | cdfeb fcadb cdfeb cdbaf")
+
+    def test_fixed_number_of_segments(self):
+        self.assertEqual(1, self.entry.at(9).value)
+        self.assertEqual(4, self.entry.at(7).value)
+        self.assertEqual(7, self.entry.at(4).value)
+        self.assertEqual(8, self.entry.at(0).value)
+
+    def test_3(self):
+        self.assertEqual(3, self.entry.at(3).value)
+
+
+if __name__ == '__main__':
+    unittest.main()
+
+
 #   0:      1:      2:      3:      4:
 #  aaaa    ....    aaaa    aaaa    ....
 # b    c  .    c  .    c  .    c  b    c
@@ -55,37 +88,3 @@
 # ta bort från 6,9: a,d,g,7, den som då har 2 kvar är 6
 # 5+1=9
 # 2+1 != 9
-
-
-class Entry:
-    def __init__(self, input):
-        [patterns, output] = input.split(" | ")
-        self.outputs = output.split(" ")
-        self.patterns = patterns.split(" ")
-        print(self.patterns)
-        print(self.outputs)
-
-    def value(pattern):
-        if len(pattern) == 4:
-            return 4
-        elif len(pattern) == 3:
-            return 7
-        elif len(pattern) == 2:
-            return 1
-        elif len(pattern) == 7:
-            return 8
-        else:
-            print(sorted_signals)
-            raise "WHAT?!"
-
-
-def zort(s):
-    result = "".join([char for char in sorted(s)])
-    return result
-
-
-print("Day 8")
-f = open("example")
-result = 0
-for line in f:
-    entry = Entry(line.rstrip())
