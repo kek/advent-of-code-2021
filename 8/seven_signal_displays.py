@@ -137,7 +137,24 @@ class Entry:
     def at(self, position):
         return self.digits[position]
 
+    def output_value(self):
+        result = ""
+        for output in self.outputs:
+            result += str(self.configuration._by_segment(set(output)).value)
+        result = int(result)
+        return result
 
-def zort(s):
-    result = "".join([char for char in sorted(s)])
-    return result
+
+class Solution:
+    def __init__(self, filename):
+        self.filename = filename
+
+    def solve(self):
+        f = open(self.filename)
+        lines = [line.rstrip() for line in f]
+        f.close()
+        result = 0
+        for line in lines:
+            entry = Entry(line)
+            result += entry.output_value()
+        return result

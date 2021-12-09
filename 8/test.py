@@ -2,15 +2,16 @@ import unittest
 from seven_signal_displays import *
 
 
-print("Day 8")
-f = open("example")
-lines = [line.rstrip() for line in f]
+class EntryTest(unittest.TestCase):
+    def test_create_entry(self):
+        entry = Entry(
+            "acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab | cdfeb fcadb cdfeb cdbaf")
+        self.assertEqual(Digit, type(entry.at(0)))
 
-
-# class EntryTest(unittest.TestCase):
-#     def test_create_entry(self):
-#         entry = Entry(lines[0])
-#         self.assertEqual(Digit, type(entry.at(0)))
+    def test_output_sum(self):
+        entry = Entry(
+            "acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab | cdfeb fcadb cdfeb cdbaf")
+        self.assertEqual(5353, entry.output_value())
 
 
 class PatternTest(unittest.TestCase):
@@ -47,6 +48,16 @@ class PatternTest(unittest.TestCase):
     def test_5(self):
         print("test 5")
         self.assertEqual(5, self.entry.at(1).value)
+
+
+class SolutionTest(unittest.TestCase):
+    def test_example_solution(self):
+        solution = Solution("example")
+        self.assertEqual(solution.solve(), 61229)
+
+    def test_proper_solution(self):
+        solution = Solution("input")
+        self.assertEqual(solution.solve(), 989396)
 
 
 if __name__ == '__main__':
