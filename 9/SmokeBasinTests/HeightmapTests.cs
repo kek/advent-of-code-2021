@@ -12,10 +12,38 @@ namespace Tests
     public class HeightmapTests
     {
         [TestMethod()]
-        public void HeightmapTest()
+        public void RiskLevelSumTest()
         {
             Input input = new Input("../../../../example");
-            new Heightmap(input);
+            Heightmap heightmap = new(input);
+            Assert.AreEqual(15, heightmap.RiskLevelSum());
+        }
+
+        [TestMethod()]
+        public void RiskLevelSumForMyInputDataTest()
+        {
+            Input input = new Input("../../../../input");
+            Heightmap heightmap = new(input);
+            Assert.AreEqual(480, heightmap.RiskLevelSum());
+        }
+
+        [TestMethod()]
+        public void ReadingPointsTest()
+        {
+            Input input = new Input("../../../../example");
+            Heightmap heightmap = new(input);
+
+            var coordinates = new Coordinates(0,1);
+            Assert.AreEqual(1, heightmap.points[coordinates].height);
+        }
+
+        [TestMethod()]
+        public void HeightmapDimensionsTest()
+        {
+            Input input = new Input("../../../../example");
+            Heightmap heightmap = new(input);
+            Assert.AreEqual(10, heightmap.Width);
+            Assert.AreEqual(5, heightmap.Height);
         }
     }
 }
