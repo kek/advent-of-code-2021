@@ -14,7 +14,7 @@ namespace Tests
         [TestMethod()]
         public void RiskLevelSumTest()
         {
-            Input input = new Input("../../../../example");
+            Input input = new("../../../../example");
             Heightmap heightmap = new(input);
             Assert.AreEqual(15, heightmap.RiskLevelSum());
         }
@@ -22,7 +22,7 @@ namespace Tests
         [TestMethod()]
         public void RiskLevelSumForMyInputDataTest()
         {
-            Input input = new Input("../../../../input");
+            Input input = new("../../../../input");
             Heightmap heightmap = new(input);
             Assert.AreEqual(480, heightmap.RiskLevelSum());
         }
@@ -30,7 +30,7 @@ namespace Tests
         [TestMethod()]
         public void ReadingPointsTest()
         {
-            Input input = new Input("../../../../example");
+            Input input = new("../../../../example");
             Heightmap heightmap = new(input);
 
             var coordinates = new Coordinates(0,1);
@@ -40,7 +40,7 @@ namespace Tests
         [TestMethod()]
         public void HeightmapDimensionsTest()
         {
-            Input input = new Input("../../../../example");
+            Input input = new("../../../../example");
             Heightmap heightmap = new(input);
             Assert.AreEqual(10, heightmap.Width);
             Assert.AreEqual(5, heightmap.Height);
